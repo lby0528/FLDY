@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700;900&family=ZCOOL+XiaoWei&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Ma Shan Zheng", "ZCOOL XiaoWei", serif;
+  --font-serif: "Noto Serif SC", serif;
+  
+  --color-primary: #8f000d; /* Cinnabar Red */
+  --color-secondary: #2c2c2c; /* Charcoal Ink */
+  --color-tertiary: #5a5a5a; /* Muted Ink */
+  --color-surface: #f4f1ea; /* Rice Paper */
+  --color-surface-container: #e8e4d8;
+  --color-surface-container-high: #ddd9c8;
+  --color-surface-container-lowest: #fdfcf9;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-secondary font-serif selection:bg-primary/20 selection:text-primary;
+    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline tracking-wider;
+  }
+}
+
+@layer components {
+  .ink-bleed {
+    text-shadow: 0 0 8px rgba(44, 44, 44, 0.2);
+  }
+
+  .btn-primary {
+    @apply px-8 py-3 bg-secondary text-surface font-headline text-xl rounded-sm transition-all duration-300 
+           hover:bg-primary hover:shadow-[0_0_15px_rgba(143,0,13,0.4)] active:scale-95 border-b-4 border-black/20;
+    clip-path: polygon(2% 0%, 98% 1%, 100% 98%, 1% 100%);
+  }
+
+  .btn-secondary {
+    @apply px-8 py-3 border-2 border-secondary text-secondary font-headline text-xl rounded-sm transition-all duration-300 
+           hover:bg-secondary hover:text-surface active:scale-95;
+    clip-path: polygon(1% 2%, 99% 0%, 97% 99%, 0% 98%);
+  }
+
+  .card-ink {
+    @apply bg-surface-container-lowest border border-secondary/20 p-6 shadow-sm relative overflow-hidden;
+    background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    border-radius: 2px;
+  }
+
+  .seal {
+    @apply inline-flex items-center justify-center bg-[#8f000d] text-[#f4f1ea] font-headline rounded-sm;
+    border: 4px solid #8f000d;
+    box-shadow: 
+      inset 0 0 12px rgba(0,0,0,0.4),
+      0 6px 16px rgba(143, 0, 13, 0.4);
+    position: relative;
+    overflow: hidden;
+    /* Authentic distressed edge for ancient seal */
+    clip-path: polygon(
+      2% 2%, 15% 1%, 35% 3%, 55% 1%, 75% 2%, 98% 1%,
+      99% 25%, 97% 45%, 99% 65%, 98% 85%, 99% 98%,
+      85% 99%, 65% 97%, 45% 99%, 25% 97%, 2% 99%,
+      1% 85%, 3% 65%, 1% 45%, 2% 25%
+    );
+  }
+  
+  .seal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .seal-text {
+    @apply relative z-10;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.15);
+    filter: contrast(1.2) brightness(1.1);
+  }
+
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+}
+
+/* Custom scrollbar for ink style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-surface;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary/30 rounded-full hover:bg-secondary/50;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
